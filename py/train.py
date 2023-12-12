@@ -15,8 +15,8 @@ with mlflow.start_run():
   with open("data/features.txt", "r") as f:
     feature_names = f.read().split("\n")[:-1]
 
-  train = xgb.DMatrix('data/javaVector_train.libsvm', feature_names=feature_names)
-  test = xgb.DMatrix('data/javaVector_eval.libsvm', feature_names=feature_names)
+  train = xgb.DMatrix('data/javaVector_train.libsvm?format=libsvm', feature_names=feature_names)
+  test = xgb.DMatrix('data/javaVector_eval.libsvm?format=libsvm', feature_names=feature_names)
 
   eval_metrics = ['error', 'logloss']
   num_boost_rounds = 1000
@@ -24,18 +24,20 @@ with mlflow.start_run():
 
   params = {'n_jobs': 4,
             'eta': 0.1,
-            'max_depth': 4,
+            'max_depth': 10,
             'gamma': 0,
-            'subsample': 1,
+            'subsample': 0.5,
             'colsample_bytree': 1,
             'eval_metric': eval_metrics,
-            'objective': 'binary:logistic'}
+            'objective': 'binary:logistic',
+            'lambda': 5
+            }
   mlflow.log_params(params)
 
   results = {}
   watchlist = [(train, 'train'), (test, 'test')]
-  clf = xgb.train(params, train, num_boost_rounds, watchlist, evals_result = results, verbose_eval=100)
-  # clf = xgb.train(params, train, num_boost_rounds, watchlist, early_stopping_rounds=50, evals_result = results, verbose_eval=100)
+  # clf = xgb.train(params, train, num_boost_rounds, watchlist, evals_result = results, verbose_eval=100)
+  clf = xgb.train(params, train, num_boost_rounds, watchlist, early_stopping_rounds=50, evals_result = results, verbose_eval=100)
 
   #####################################
   # Evaluate predictions

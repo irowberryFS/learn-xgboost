@@ -1,0 +1,15 @@
+1. 2260 go to train (84%), 400 to eval (16%)
+2. The accuracy is 76.75% and it's being calculated by #correct / total
+3. It will add more information as instead of seeing if two names are the same, it counts the number of similar name parts. The vectors got longer.
+4. The accuracy is now 82.25%
+5. It should inform the model that instead of having missing data, that the names are actually different.
+6. The model accuracy went up to 84%. I can't think of any reasons that it might be flawed...
+7. I believe it's checking to see if the years vary up to 5 years difference. So for 1 and 2 they'll be a "match" and for >5 it won't.
+8. The accuracy is now 84.75%. We could improve it by adding a feature for which range it is in <1, <2, <5, etc.
+9. Spouse name, birth year, person name
+10. It's lower in tree probably because the majority of items being classified go towards that node.
+11. It stopped at iteration 425, the accuracy improved slightly.
+12. The accuracy is now at 85.5%
+13. The optimal tree depth is somewhere between 8-10
+14. There's a variety of metrics that could be useful, such as accuracy, and total run time.
+15. I changed the subsample value to 0.5 and it increased accuracy about 1%. Another potential option is to perform a grid search over hyperparameters to find the best mixture.
